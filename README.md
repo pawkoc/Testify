@@ -1,37 +1,29 @@
-## Welcome to GitHub Pages
+## Spis treści
 
-You can use the [editor on GitHub](https://github.com/pawkoc/Testify/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+- [Cel projektu](#cel-projektu)
+- [Stos technologiczny](#stos-technologiczny)
+- [Techniki komponentowe](#techniki-komponentowe)
+- [Architektura](#architektura)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Cel projektu
 
-### Markdown
+Celem projektu Testify jest stworzenie platformy, która umożliwi udostępnianie szkieletów zadań, pobieranie ich oraz dodawania rozwiązań do wspomnianych zadań. Po wrzuceniu zadania zostanie ono zbudowane odpowiednio przygotowanym skryptem oraz uruchomione z zestawem testów. Na podstawie wyników tych testów użytkownik uzyska informację zwrotną na temat poprawności wykonania zadania. Dodatkowo będzie możliwość stworzenia rankingów najlepszych zadań.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Stos technologiczny
+- Java 8
+- Spring MVC
+- Spring Boot
+- Spring Cloud
+- Spring AOP
+- Apache Spark
+- Docker
+- PostgreSQL
+- MongoDB
 
-```markdown
-Syntax highlighted code block
+### Techniki komponentowe
+- AOP - aspekty do np. logowania informacji
+- Spring MVC - podstawowy framework, który zostanie użyty. W ramach projektu ma powstać także aplikacja webowa, służąca jako interfejs dla użytkownika.
 
-# Header 1
-## Header 2
-### Header 3
+### Architektura
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pawkoc/Testify/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Cały system będzie składał się z dwóch modułów. Jeden będzie odpowiedzialny za komunikację z użytkownikiem oraz dostarczanie mu wszytskich podstawowych funkcjonalności (jak np. logowanie się do systemu itp.) oraz z modułu, który będzie przygotowywał środowisko i uruchamiał w nim załadowane przez użytkownika zadanie. Następnie będzie on zwracał wyniki do pierwszego modułu, który będzie je interpretował oraz przetwarzał w celu przedtstawienia ich użytkownikom. Drugi moduł będzie mógł być uruchomiony w wielu instancjach co pozwoli na równoległe wykonywanie wielu zadań.
