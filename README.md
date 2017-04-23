@@ -7,7 +7,7 @@
 
 ### Cel projektu
 
-Celem projektu Testify jest stworzenie platformy, która umożliwi udostępnianie szkieletów zadań, pobieranie ich oraz dodawania rozwiązań do wspomnianych zadań. Po wrzuceniu zadania zostanie ono zbudowane odpowiednio przygotowanym skryptem oraz uruchomione z zestawem testów. Na podstawie wyników tych testów użytkownik uzyska informację zwrotną na temat poprawności wykonania zadania. Dodatkowo będzie możliwość stworzenia rankingów najlepszych zadań.
+Celem projektu Testify jest stworzenie platformy, która umożliwi udostępnianie szkieletów zadań, pobieranie ich oraz dodawania rozwiązań do wspomnianych zadań. Po wrzuceniu zadania zostanie ono zbudowane odpowiednio przygotowanym skryptem oraz uruchomione z zestawem testów. Na podstawie wyników tych testów użytkownik uzyska informację zwrotną na temat poprawności wykonania zadania. Dodatkowo system będzie oferował możliwość stworzenia rankingów najlepszych zadań.
 
 ### Stos technologiczny
 - Java 8
@@ -22,14 +22,14 @@ Celem projektu Testify jest stworzenie platformy, która umożliwi udostępniani
 
 ### Architektura
 
-Cały system będzie składał się z dwóch modułów. Jeden będzie odpowiedzialny za komunikację z użytkownikiem oraz dostarczanie mu wszytskich podstawowych funkcjonalności (jak np. logowanie się do systemu itp.) oraz z modułu, który będzie przygotowywał środowisko i uruchamiał w nim załadowane przez użytkownika zadanie. Następnie będzie on zwracał wyniki do pierwszego modułu, który będzie je interpretował oraz przetwarzał w celu przedtstawienia ich użytkownikom. Drugi moduł będzie mógł być uruchomiony w wielu instancjach co pozwoli na równoległe wykonywanie wielu zadań.
-
 ![Architektura](docs/architecture.png)
 *Rys. 1 Architektura*
 
-Rys. 1 prezentuje planowaną architekturę systemu oraz komunikację klientów i poszczególnych komponentów. Wyróżniamy dwóch użytkowników:
-- Prowadzący (Professor) - tworzy zadania i publikuje "szkielety" kodu w systemie, przygotowuje testy, które rozwiązanie powinno zaliczyć oraz schemat punktacji,
-- Student - pobiera przygotowane przez Prowadzącego zadania. Po ich rozwiązadniu wysyła kod do systemu. Wyniki zwrócone przez system sprawdza w przeglądarce internetowej.
+Rys. 1 prezentuje planowaną architekturę systemu oraz komunikację klientów i poszczególnych komponentów. Wyróżniamy dwa typy użytkowników:
+- Prowadzący (Professor) - tworzy zadania i publikuje "szkielety" kodu w systemie, przygotowuje testy, które dostarczone rozwiązanie powinno przejść oraz schemat punktacji,
+- Student - pobiera przygotowane przez Prowadzącego zadania. Po ich rozwiązadniu wysyła kod do systemu.
+
+Komunikacja klientów z systemem (logowanie, publikacja/pobranie zadań, wysyłanie rozwiązań, wyświetlenie wyników) odbywa się przy pomocy przeglądarki internetowej.
 
 Część serwerowa składa się z 3 mikroserwisów i Środowiska Wykonawczego (Evaluation server). Serwisy (każdy ma swoją bazę danych zaznaczoną w nawiasie):
 - User service (PostgreSQL) - umożliwia logowanie do systemu, przydziela token sesji,
