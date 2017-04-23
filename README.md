@@ -1,37 +1,46 @@
-## Welcome to GitHub Pages
+## Spis treści
 
-You can use the [editor on GitHub](https://github.com/pawkoc/Testify/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+- [Cel projektu](#cel-projektu)
+- [Stos technologiczny](#stos-technologiczny)
+- [Architektura](#architektura)
+- [Techniki komponentowe](#techniki-komponentowe)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Cel projektu
 
-### Markdown
+Celem projektu Testify jest stworzenie platformy, która umożliwi udostępnianie szkieletów zadań, pobieranie ich oraz dodawanie rozwiązań do wspomnianych zadań. Po wrzuceniu zadania zostanie ono zbudowane odpowiednio przygotowanym skryptem oraz uruchomione z zestawem testów. Na podstawie wyników tych testów użytkownik uzyska informację zwrotną na temat poprawności wykonania zadania. Dodatkowo system będzie oferował możliwość stworzenia rankingów najlepszych zadań.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Stos technologiczny
+- Java 8
+- Spring MVC
+- Spring Boot
+- Spring Cloud
+- Spring AOP
+- Apache Spark
+- Docker
+- PostgreSQL
+- MongoDB
 
-```markdown
-Syntax highlighted code block
+### Architektura
 
-# Header 1
-## Header 2
-### Header 3
+![Architektura](docs/architecture.png)
+*Rys. 1 Architektura*
 
-- Bulleted
-- List
+Rys. 1 prezentuje planowaną architekturę systemu oraz komunikację klientów i poszczególnych komponentów. Wyróżniamy dwa typy użytkowników:
+- Prowadzący (Professor) - tworzy zadania i publikuje "szkielety" kodu w systemie, przygotowuje testy, które dostarczone rozwiązanie powinno przejść oraz schemat punktacji,
+- Student - pobiera przygotowane przez Prowadzącego zadania. Po ich rozwiązadniu wysyła kod do systemu.
 
-1. Numbered
-2. List
+Komunikacja klientów z systemem (logowanie, publikacja/pobranie zadań, wysyłanie rozwiązań, wyświetlenie wyników) odbywa się przy pomocy przeglądarki internetowej.
 
-**Bold** and _Italic_ and `Code` text
+Część serwerowa składa się z 3 mikroserwisów i Środowiska Wykonawczego (Evaluation server). Serwisy (każdy ma swoją bazę danych zaznaczoną w nawiasie):
+- User service (PostgreSQL) - umożliwia logowanie do systemu, przydziela token sesji,
+- Assignment Service (MongoDB) - umożliwia dodawanie/pobieranie zadań oraz odbiera rozwiązania od Studenta,
+- Result Service (PostgreSQL) - umożliwia pobieranie informacji o wynikach za zadania dla poszczególnych Studentów.
 
-[Link](url) and ![Image](src)
-```
+Środowisko Wykonawcze to komponent odpowiedzialny za uruchamianie i ocenę rozwiązań (w postaci plików .jar) nadesłanych przez Studentów. Na nadesłanym kodzie wykonuje szereg operacji:
+- przepuszczenie przez testy przygotowane przez Prowadzącego,
+- pomiar czasu rozwiązania, co umożliwi tworzenie list rankingowych,
+- wykrywanie plagiatów w porównaniu do rozwiązań innych Studentów (opcjonalne).
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pawkoc/Testify/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Techniki komponentowe
+- Spring MVC - podstawowy framework, który zostanie użyty. W ramach projektu ma powstać także aplikacja webowa, służąca jako interfejs dla użytkownika,
+- AOP - programowanie aspektowe wykorzystamy do logowania informacji oraz do implementacji systemu rozszerzeń - tj. definicji operacji, które Środowisko Wykonawcze wykona na nadesłanym rozwiązaniu. 
