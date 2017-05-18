@@ -69,6 +69,7 @@
 
     <modules>
         <module>task-storage</module>
+        <module>task-summary</module>
     </modules>
 
 </project>
