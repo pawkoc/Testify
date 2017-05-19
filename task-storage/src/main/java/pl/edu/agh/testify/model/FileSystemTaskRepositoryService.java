@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileSystemTaskRepositoryService implements TaskRepository {
@@ -18,8 +21,9 @@ public class FileSystemTaskRepositoryService implements TaskRepository {
     private String STORAGE_PATH;
 
     @Override
-    public void save(MultipartFile file) {
-
+    public void save(MultipartFile file) throws IOException {
+        Files.copy(file.getInputStream(), Paths.get(STORAGE_PATH).resolve(file.getOriginalFilename()),
+                StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
