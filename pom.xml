@@ -70,6 +70,10 @@
     <modules>
         <module>task-storage</module>
         <module>task-summary</module>
+        <module>composite-service</module>
+        <module>test-service</module>
+        <module>discovery-service</module>
+        <module>commons</module>
     </modules>
 
 </project>
