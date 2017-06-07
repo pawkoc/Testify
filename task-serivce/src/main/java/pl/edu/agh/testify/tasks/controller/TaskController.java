@@ -5,6 +5,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,10 +28,12 @@ public class TaskController {
     }
 
     @PostMapping(path = "/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<?> uploadFile(@RequestParam("file") String file,
                                         @RequestParam("taskName") String taskName,
                                         @RequestParam("summary") String summary) throws TaskCannotBeSavedException {
-        Task task = taskService.saveTask(file, taskName, file.getOriginalFilename(), summary);
+        MultipartFile preparedFile = new MockMultipartFile(taskName, taskName,
+                                "text/plain", file.getBytes());
+        Task task = taskService.saveTask(preparedFile, taskName, preparedFile.getOriginalFilename(), summary);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/{taskId}")

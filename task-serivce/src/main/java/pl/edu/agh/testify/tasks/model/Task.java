@@ -18,6 +18,12 @@ public class Task {
     public Task() {
     }
 
+    public Task(String taskName, String originalFileName, String summary) {
+        this.taskName = taskName;
+        this.originalFileName = originalFileName;
+        this.summary = summary;
+    }
+
     public Task(byte[] taskData, String taskName, String originalFileName, String summary) {
         this.taskData = taskData;
         this.taskName = taskName;
