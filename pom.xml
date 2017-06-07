@@ -74,6 +74,7 @@
         <module>test-service</module>
         <module>discovery-service</module>
         <module>commons</module>
+        <module>task-serivce</module>
     </modules>
 
 </project>
