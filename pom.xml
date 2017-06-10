@@ -73,6 +73,7 @@
     </properties>
 
     <modules>
+        <module>client</module>
         <module>task-serivce</module>
         <module>execution-service</module>
         <module>discovery-service</module>
