@@ -6,9 +6,11 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import pl.edu.agh.testify.tasks.model.Task;
 import pl.edu.agh.testify.tasks.repository.TaskRepository;
 
@@ -22,7 +24,7 @@ public class MainView extends UI {
     TextField filename;
     TextField taskName;
     TextField summary;
-    TextField taskData;
+    Upload taskData;
 
     @Autowired
     public MainView(TaskRepository repo) {
@@ -31,7 +33,7 @@ public class MainView extends UI {
         this.filename = new TextField();
         this.taskName = new TextField();
         this.summary = new TextField();
-        this.taskData = new TextField();
+        this.taskData = new Upload();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class MainView extends UI {
         filename.setPlaceholder("Filename");
         taskName.setPlaceholder("Name for task");
         summary.setPlaceholder("Summary");
-        taskData.setPlaceholder("Data");
+        taskData.setButtonCaption("Data");
         layout.addComponents(filename);
         layout.addComponents(taskName);
         layout.addComponents(summary);
@@ -52,8 +54,9 @@ public class MainView extends UI {
         RestTemplate restTemplate = new RestTemplate();
 
         Button submit = new Button("Upload", event -> {
-            MultiValueMap<String, String> mvm = new LinkedMultiValueMap<String, String>();
-            mvm.add("file", taskData.getValue());
+            MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+//            mvm.add("file", new MockMultipartFile(taskName.getValue(), taskName.getValue(),
+//                    "text/plain", taskData.getValue().getBytes()));
             mvm.add("taskName", taskName.getValue());
             mvm.add("summary", summary.getValue());
             restTemplate.postForObject("http://localhost:11226/task/upload", mvm, MultiValueMap.class);
