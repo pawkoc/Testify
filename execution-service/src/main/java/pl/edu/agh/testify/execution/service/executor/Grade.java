@@ -18,4 +18,9 @@ public enum Grade {
                 .filter(g -> g.val == grade)
                 .findFirst().orElse(_2_0);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(val);
+    }
 }

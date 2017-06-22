@@ -7,20 +7,10 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 
-public class TaskProcessor implements Callable<TestsResult> {
+class TaskProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(TaskProcessor.class);
-    private final List<Test> tests;
-    private final Path parentDir;
-    private Path jar;
-
-    public TaskProcessor(Path absoluteJarPath, List<Test> tests) {
-        this.jar = absoluteJarPath.getFileName();
-        this.parentDir = absoluteJarPath.getParent();
-        this.tests = tests;
-    }
 
     static TestsResult executeJar(Path absoluteJarPath, List<Test> tests) throws IOException {
         TestsResult taskResult = new SimpleCountingTestsResult();
@@ -34,22 +24,8 @@ public class TaskProcessor implements Callable<TestsResult> {
                 taskResult.fail(test);
             }
         }
+        taskResult.grade();
         return taskResult;
-    }
-
-    @Override
-    public TestsResult call() throws Exception {
-//        TestsResult taskResult = new SimpleCountingTestsResult();
-//        for (Test test : tests) {
-//            String result = executeJar(test.input());
-//            if (test.passes(result)) {
-//                taskResult.sucess(test);
-//            } else {
-//                taskResult.fail(test);
-//            }
-//        }
-//        return taskResult;
-        return null;
     }
 
     private static String executeJar(String input, Path jar, Path parentDir) throws IOException {
