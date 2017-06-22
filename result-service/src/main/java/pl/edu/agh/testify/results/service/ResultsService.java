@@ -8,7 +8,6 @@ import pl.edu.agh.testify.results.model.Result;
 import pl.edu.agh.testify.results.repository.ResultsRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +25,7 @@ public class ResultsService {
         if (result == null) {
             result = convertMessage(message);
         } else {
+            result.setGrade(message.getGrade());
             result.setFailedTests(convertFailedTests(message));
         }
         resultsRepository.save(result);
