@@ -1,12 +1,15 @@
 package pl.edu.agh.testify.execution.service.executor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class SimpleCountingTestsResult implements TestsResult {
+public class SimpleCountingTestsResult implements TestsResult, Serializable {
 
     private final List<Test> passedTests = new ArrayList<>();
     private final List<Test> failedTests = new ArrayList<>();
+    private Grade grade;
 
     @Override
     public void sucess(Test test) {
@@ -19,10 +22,17 @@ public class SimpleCountingTestsResult implements TestsResult {
     }
 
     @Override
+    public List<Test> getFailed() {
+        return Collections.unmodifiableList(failedTests);
+    }
+
+    @Override
     public Grade grade() {
         double ratio = (double) passedTests.size() / (passedTests.size() + failedTests.size());
         double percent = ratio * 100;
-        return getGradeFromPercent(percent);
+        Grade grade = getGradeFromPercent(percent);
+        this.grade = grade;
+        return grade;
     }
 
     private Grade getGradeFromPercent(double percent) {
@@ -34,11 +44,28 @@ public class SimpleCountingTestsResult implements TestsResult {
         else return Grade._5_0;
     }
 
+    public List<Test> getPassedTests() {
+        return passedTests;
+    }
+
+    public List<Test> getFailedTests() {
+        return failedTests;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
     @Override
     public String toString() {
         return "SimpleCountingTestsResult{" +
                 "passedTests=" + passedTests +
                 ", failedTests=" + failedTests +
+                ", grade=" + grade +
                 '}';
     }
 }

@@ -76,6 +76,7 @@
         <module>task-serivce</module>
         <module>execution-service</module>
         <module>discovery-service</module>
+        <module>common</module>
     </modules>
 
 </project>
