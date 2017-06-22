@@ -4,10 +4,12 @@ import java.util.Map;
 
 public class TestResultMessage {
 
-    private final long studentId;
-    private final long taskId;
-    private final String grade;
-    private final Map<String, String> failedTests;
+    private long studentId;
+    private long taskId;
+    private String grade;
+    private Map<String, String> failedTests;
+
+    public TestResultMessage() {}
 
     public TestResultMessage(long studentId, long taskId, String grade, Map<String, String> failedTests) {
         this.studentId = studentId;
@@ -30,5 +32,15 @@ public class TestResultMessage {
 
     public Map<String, String> getFailedTests() {
         return failedTests;
+    }
+
+    @Override
+    public String toString() {
+        return "TestResultMessage{" +
+                "studentId=" + studentId +
+                ", taskId=" + taskId +
+                ", grade='" + grade + '\'' +
+                ", failedTests=" + failedTests +
+                '}';
     }
 }
