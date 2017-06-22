@@ -20,7 +20,7 @@ public class SimpleCountingTestsResult implements TestsResult {
 
     @Override
     public Grade grade() {
-        double ratio = (double) passedTests.size() / failedTests.size();
+        double ratio = (double) passedTests.size() / (passedTests.size() + failedTests.size());
         double percent = ratio * 100;
         return getGradeFromPercent(percent);
     }
@@ -32,5 +32,13 @@ public class SimpleCountingTestsResult implements TestsResult {
         else if (Double.compare(percent, 80.) < 0) return Grade._4_0;
         else if (Double.compare(percent, 90.) < 0) return Grade._4_5;
         else return Grade._5_0;
+    }
+
+    @Override
+    public String toString() {
+        return "SimpleCountingTestsResult{" +
+                "passedTests=" + passedTests +
+                ", failedTests=" + failedTests +
+                '}';
     }
 }

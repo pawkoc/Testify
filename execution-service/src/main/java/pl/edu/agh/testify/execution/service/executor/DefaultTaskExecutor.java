@@ -43,7 +43,7 @@ public class DefaultTaskExecutor implements TaskExecutor {
                 return null;
             }, executor);
             logger.info("Task left for execution");
-            future.thenAccept(testsResult -> logger.info("TEST RESULT READY " + testsResult.grade()));
+            future.thenAccept(testsResult -> logger.info("TEST RESULT READY " + testsResult + " GRADE: " + testsResult.grade()));
         }
     }
 

@@ -19,4 +19,12 @@ public class StringTest implements Test {
     public String input() {
         return input;
     }
+
+    @Override
+    public String toString() {
+        return "StringTest{" +
+                "input='" + input + '\'' +
+                ", expectedOutput='" + expectedOutput + '\'' +
+                '}';
+    }
 }

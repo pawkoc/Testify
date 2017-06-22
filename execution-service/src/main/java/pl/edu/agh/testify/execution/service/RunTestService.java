@@ -41,10 +41,10 @@ public class RunTestService {
                 TaskData data = new TaskData(taskId, studentId, tests, p);
                 taskQueue.addTask(data);
             });
+            return true;
         } catch (IOException e) {
             return false;
         }
-        return false;
     }
 
     private List<Test> prepareTests(long taskId) {

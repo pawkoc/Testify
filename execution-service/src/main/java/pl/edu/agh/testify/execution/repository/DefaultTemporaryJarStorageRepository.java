@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 @Repository
@@ -26,7 +27,7 @@ public class DefaultTemporaryJarStorageRepository implements TemporaryJarStorage
         Path finalPath = parentDirs.resolve(file.getOriginalFilename());
         try {
             Files.createDirectories(parentDirs);
-            Files.copy(file.getInputStream(), finalPath);
+            Files.copy(file.getInputStream(), finalPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             logger.error("Cannot save solution file " + file.getOriginalFilename(), e);
             Optional.empty();
