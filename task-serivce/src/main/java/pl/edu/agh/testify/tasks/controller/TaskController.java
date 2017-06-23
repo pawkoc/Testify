@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.edu.agh.testify.dto.TaskDTO;
 import pl.edu.agh.testify.tasks.exceptions.TaskCannotBeSavedException;
 import pl.edu.agh.testify.tasks.exceptions.TaskNotFoundException;
 import pl.edu.agh.testify.tasks.model.Task;
 import pl.edu.agh.testify.tasks.service.TaskService;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/task")
@@ -48,5 +50,10 @@ public class TaskController {
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+task.getOriginalFileName()+"\"")
                 .body(fileResource);
+    }
+
+    @GetMapping(path = "/all")
+    public List<TaskDTO> getAllTasks() {
+        return taskService.getAllTasksDTO();
     }
 }

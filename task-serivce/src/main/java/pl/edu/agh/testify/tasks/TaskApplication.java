@@ -11,7 +11,7 @@ import pl.edu.agh.testify.tasks.model.Task;
 import pl.edu.agh.testify.tasks.repository.TaskRepository;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class TaskApplication {
 
     private static final Logger log = LoggerFactory.getLogger(TaskApplication.class);
@@ -23,24 +23,9 @@ public class TaskApplication {
     @Bean
     public CommandLineRunner loadData(TaskRepository repository) {
         return (args) -> {
-            // save a couple of customers
+            // save a couple of tasks
             repository.save(new Task("1", "1", "1"));
             repository.save(new Task("2", "2", "2"));
-
-            // fetch all customers
-            log.info("Customers found with findAll():");
-            log.info("-------------------------------");
-            for (Task customer : repository.findAll()) {
-                log.info(customer.toString());
-            }
-            log.info("");
-
-            // fetch an individual customer by ID
-            Task customer = repository.findOne(1L);
-            log.info("Customer found with findOne(1L):");
-            log.info("--------------------------------");
-            log.info(customer.toString());
-            log.info("");
         };
     }
 }
