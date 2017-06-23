@@ -1,5 +1,6 @@
 package pl.edu.agh.testify.client.model;
 
+import pl.edu.agh.testify.dto.ResultDTO;
 import pl.edu.agh.testify.dto.TaskDTO;
 
 public class Task {
@@ -9,17 +10,22 @@ public class Task {
     private String description;
     private String url;
 
+    private String grade;
+    private String failedTests;
+
     public Task() {}
 
-    public Task(TaskDTO taskDTO) {
-        this(taskDTO.getId(), taskDTO.getTaskName(), taskDTO.getDescription(), LinkBuilder.task(taskDTO.getId()));
+    public Task(TaskDTO taskDTO, ResultDTO resultDTO) {
+        this(taskDTO.getId(), taskDTO.getTaskName(), taskDTO.getDescription(), LinkBuilder.task(taskDTO.getId()), resultDTO.getGrade(), resultDTO.getFailedTests());
     }
 
-    public Task(long id, String taskName, String description, String url) {
+    public Task(long id, String taskName, String description, String url, String grade, String failedTests) {
         this.id = id;
         this.taskName = taskName;
         this.description = description;
         this.url = url;
+        this.grade = grade;
+        this.failedTests = failedTests;
     }
 
     public long getId() {
@@ -52,5 +58,21 @@ public class Task {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getFailedTests() {
+        return failedTests;
+    }
+
+    public void setFailedTests(String failedTests) {
+        this.failedTests = failedTests;
     }
 }

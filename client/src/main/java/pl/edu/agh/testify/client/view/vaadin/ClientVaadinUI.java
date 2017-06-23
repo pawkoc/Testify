@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.agh.testify.client.model.NewTask;
 import pl.edu.agh.testify.client.model.Task;
 import pl.edu.agh.testify.client.service.TaskService;
-import pl.edu.agh.testify.dto.TaskDTO;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class ClientVaadinUI extends UI {
 
         HorizontalLayout toolbar = new HorizontalLayout(addTaskBtn);
 
-        grid.setColumns("id", "taskName", "description", "url");
+        grid.setColumns("id", "taskName", "description", "url", "grade", "failedTests");
 
         HorizontalLayout main = new HorizontalLayout(grid, form);
         main.setSizeFull();

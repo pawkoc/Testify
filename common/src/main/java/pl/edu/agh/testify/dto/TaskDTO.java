@@ -1,6 +1,10 @@
 package pl.edu.agh.testify.dto;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class TaskDTO {
+
     private long id;
     private String taskName;
     private String description;

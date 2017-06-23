@@ -2,6 +2,7 @@ package pl.edu.agh.testify.results.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.testify.dto.ResultDTO;
 import pl.edu.agh.testify.rabbitmq.message.TestResultMessage;
 import pl.edu.agh.testify.results.model.FailedTest;
 import pl.edu.agh.testify.results.model.Result;
@@ -21,7 +22,7 @@ public class ResultsService {
     }
 
     public void saveResults(TestResultMessage message) {
-        Result result = getResultByStudentIdAndTaskId(message.getStudentId(), message.getTaskId());
+        Result result = resultsRepository.findByStudentIdAndTaskId(message.getStudentId(), message.getTaskId());
         if (result == null) {
             result = convertMessage(message);
         } else {
@@ -42,7 +43,17 @@ public class ResultsService {
                     .collect(Collectors.toList());
     }
 
-    public Result getResultByStudentIdAndTaskId(long studentId, long taskId) {
-        return resultsRepository.findByStudentIdAndTaskId(studentId, taskId);
+    public ResultDTO getResultByStudentIdAndTaskId(long studentId, long taskId) {
+        Result result = resultsRepository.findByStudentIdAndTaskId(studentId, taskId);
+        if (result == null) {
+            return new ResultDTO();
+        }
+        return new ResultDTO(taskId, result.getGrade(), failedTestsToString(result.getFailedTests()));
+    }
+
+    private String failedTestsToString(List<FailedTest> failedTests) {
+        return failedTests.stream()
+                .map(t -> "[" + t.getExpectedOutput() + ":" + t.getActualOutput() + "]")
+                .collect(Collectors.joining(","));
     }
 }

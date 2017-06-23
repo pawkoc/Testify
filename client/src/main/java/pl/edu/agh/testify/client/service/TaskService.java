@@ -13,11 +13,13 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import pl.edu.agh.testify.client.model.NewTask;
 import pl.edu.agh.testify.client.model.Task;
+import pl.edu.agh.testify.dto.ResultDTO;
 import pl.edu.agh.testify.dto.TaskDTO;
 
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,8 +59,21 @@ public class TaskService {
         ResponseEntity<TaskDTO[]> entity = restTemplate.getForEntity("http://localhost:11226/task/all", TaskDTO[].class);
         TaskDTO[] dtos = entity.getBody();
         List<TaskDTO> dtoList = Arrays.asList(dtos);
-        return dtoList.stream()
-                .map(Task::new)
+        String resUrl = "http://localhost:11228/result/1/";
+        List<ResultDTO> resultDTOS = dtoList.stream()
+                .map(dto -> restTemplate.getForEntity(resUrl + dto.getId(), ResultDTO.class))
+                .map(HttpEntity::getBody)
                 .collect(Collectors.toList());
+
+
+        List<Task> result = new ArrayList<>();
+        for (TaskDTO taskDto : dtos) {
+            ResultDTO resultDTO = resultDTOS.stream()
+                    .filter(r -> r.getTaskId() == taskDto.getId())
+                    .findFirst().orElse(new ResultDTO());
+            result.add(new Task(taskDto, resultDTO));
+        }
+
+        return result;
     }
 }
